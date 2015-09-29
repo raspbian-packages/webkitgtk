@@ -81,7 +81,11 @@ public:
     size_t size();
     size_t capacity();
 
+#if CPU(PPC64)
+    static const size_t blockSize = 64 * KB;
+#else
     static const size_t blockSize = 32 * KB;
+#endif
 
     bool hasWorkList();
     CopyWorkList& workList();
