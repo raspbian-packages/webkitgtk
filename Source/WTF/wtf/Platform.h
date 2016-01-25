@@ -194,6 +194,14 @@
 #define WTF_CPU_ARM64 1
 #endif
 
+/* CPU(ARM64) - AArch64 */
+#if defined(__aarch64__)
+#define WTF_CPU_ARM64 1
+#if defined(__AARCH64BE__)
+#define WTF_CPU_BIG_ENDIAN 1
+#endif
+#endif
+
 /* CPU(ARM) - ARM, any version*/
 #define WTF_ARM_ARCH_AT_LEAST(N) (CPU(ARM) && WTF_ARM_ARCH_VERSION >= N)
 
@@ -978,7 +986,7 @@
 #define WTF_USE_IMLANG_FONT_LINK2 1
 #endif
 
-#if !defined(ENABLE_COMPARE_AND_SWAP) && (OS(WINDOWS) || (COMPILER(GCC) && (CPU(X86) || CPU(X86_64) || CPU(ARM_THUMB2) || CPU(ARM64))))
+#if !defined(ENABLE_COMPARE_AND_SWAP) && (OS(WINDOWS) || (COMPILER(GCC) && (CPU(X86) || CPU(X86_64) || CPU(ARM_THUMB2))))
 #define ENABLE_COMPARE_AND_SWAP 1
 #endif
 

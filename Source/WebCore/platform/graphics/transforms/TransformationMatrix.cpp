@@ -1035,7 +1035,7 @@ TransformationMatrix TransformationMatrix::rectToRect(const FloatRect& from, con
 // this = mat * this.
 TransformationMatrix& TransformationMatrix::multiply(const TransformationMatrix& mat)
 {
-#if CPU(ARM64)
+#if CPU(ARM64) && PLATFORM(IOS)
     double* leftMatrix = &(m_matrix[0][0]);
     const double* rightMatrix = &(mat.m_matrix[0][0]);
     asm volatile (
