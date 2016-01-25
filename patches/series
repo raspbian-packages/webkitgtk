@@ -1,0 +1,10 @@
+fix-gtkdoc-error.patch
+install-minibrowser.patch
+atomic_build_fix.patch
+restore_sparc_code.patch
+02_notebook_scroll.patch
+ftbfs-armhf.patch
+x32_support.patch
+fix-arm64-build.patch
+ppc64-align.patch
+fix-cloop.patch
