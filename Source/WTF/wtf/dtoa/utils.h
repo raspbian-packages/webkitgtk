@@ -60,6 +60,8 @@ defined(_MIPS_ARCH_MIPS32R2)
 #endif  // _WIN32
 #elif defined(WINCE) || defined(_WIN32_WCE)
 #define DOUBLE_CONVERSION_CORRECT_DOUBLE_OPERATIONS 1
+#elif defined(__mc68000__)
+#undef DOUBLE_CONVERSION_CORRECT_DOUBLE_OPERATIONS
 #else
 #error Target architecture was not detected as supported by Double-Conversion.
 #endif

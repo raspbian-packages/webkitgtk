@@ -33,7 +33,11 @@ struct SameSizeAsStyleBoxData : public RefCounted<SameSizeAsStyleBoxData> {
     uint32_t bitfields;
 };
 
+#if CPU(M68K)
+COMPILE_ASSERT(sizeof(StyleBoxData) <= sizeof(SameSizeAsStyleBoxData), StyleBoxData_should_not_grow);
+#else
 COMPILE_ASSERT(sizeof(StyleBoxData) == sizeof(SameSizeAsStyleBoxData), StyleBoxData_should_not_grow);
+#endif
 
 StyleBoxData::StyleBoxData()
     : m_minWidth(RenderStyle::initialMinSize())
