@@ -134,6 +134,11 @@ static bool enableAssembler(ExecutableAllocator& executableAllocator)
         return false;
     }
 
+#if CPU(X86)
+    if (!MacroAssembler::supportsFloatingPoint())
+        return false;
+#endif
+
 #if USE(CF)
 #if COMPILER(GCC) && !COMPILER(CLANG)
     // FIXME: remove this once the EWS have been upgraded to LLVM.
