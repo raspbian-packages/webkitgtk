@@ -80,8 +80,10 @@ javascriptcore_cppflags += \
 	-fno-omit-frame-pointer
 
 if COMPILER_GCC
+if !TARGET_ARMHF
 javascriptcore_cppflags += \
 	-fno-tree-dce
+endif
 endif
 
 javascriptcore_cflags += \

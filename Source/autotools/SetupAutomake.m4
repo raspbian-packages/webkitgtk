@@ -67,3 +67,5 @@ AM_CONDITIONAL([ENABLE_SPELLCHECK],[test "$enable_spellcheck" = "yes"])
 
 # Introspection conditional.
 AM_CONDITIONAL([ENABLE_INTROSPECTION],[test "$enable_introspection" = "yes"])
+
+AM_CONDITIONAL([TARGET_ARMHF],[test "$build" = "arm-unknown-linux-gnueabihf"])
