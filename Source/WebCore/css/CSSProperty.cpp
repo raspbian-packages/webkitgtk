@@ -34,7 +34,11 @@ struct SameSizeAsCSSProperty {
     void* value;
 };
 
+#if CPU(M68K)
+COMPILE_ASSERT(sizeof(CSSProperty) <= sizeof(SameSizeAsCSSProperty), CSSProperty_should_stay_small);
+#else
 COMPILE_ASSERT(sizeof(CSSProperty) == sizeof(SameSizeAsCSSProperty), CSSProperty_should_stay_small);
+#endif
 
 CSSPropertyID StylePropertyMetadata::shorthandID() const
 {
