@@ -1,5 +1,5 @@
 if ENABLE_WEBKIT2
-noinst_PROGRAMS += \
+libexec_PROGRAMS += \
 	Programs/MiniBrowser
 endif
 
@@ -43,9 +43,6 @@ Programs_MiniBrowser_LDADD = \
 	$(GLIB_LIBS) \
 	$(GTK_LIBS) \
 	$(LIBSOUP_LIBS)
-
-Programs_MiniBrowser_LDFLAGS = \
-	-no-install
 
 CLEANFILES += \
 	$(top_builddir)/Programs/MiniBrowser \
