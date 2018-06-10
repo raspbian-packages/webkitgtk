@@ -1,4 +1,7 @@
-webkitgtk (2.4.11-3+rpi2) buster-staging; urgency=medium
+webkitgtk (2.4.11-4+rpi1) buster-staging; urgency=medium
+
+  [changes brought forward from 2.4.7-3+rpi1 by Peter Michael Green <plugwash@raspbian.org> at Wed, 10 Dec 2014 08:17:47 +0000]
+  * Disable jit, it's broken on armv6.
 
   [Changes introduced in version 2.4.11-3+rpi1 by Peter Michael Green]
   * Try to disable documentation build, it seems to be broken.
@@ -9,14 +12,43 @@ webkitgtk (2.4.11-3+rpi2) buster-staging; urgency=medium
   * debian/patches/icu59.patch: Backport upstream fix for icu59 FTBFS.
   * debian/rules: Stop acting on dbg packages we don't build anymore.
 
- -- Peter Michael Green <plugwash@raspbian.org>  Mon, 28 May 2018 13:17:22 +0000
+ -- Raspbian forward porter <root@raspbian.org>  Sun, 10 Jun 2018 09:50:58 +0000
 
-webkitgtk (2.4.11-3+rpi1) stretch-staging; urgency=medium
+webkitgtk (2.4.11-4) unstable; urgency=medium
 
-  [changes brought forward from 2.4.7-3+rpi1 by Peter Michael Green <plugwash@raspbian.org> at Wed, 10 Dec 2014 08:17:47 +0000]
-  * Disable jit, it's broken on armv6.
+  * debian/patches/fix-build-icu.patch:
+    + Fix build with ICU 5.91 (Closes: #900282).
+  * debian/patches/gtk-doc-fix[123].patch:
+    + Cherry pick some upstream patches to be able to build with recent
+      versions of gtk-doc.
+  * debian/rules:
+    + Build with -Wno-expansion-to-defined in order to reduce the large
+      amount of warnings with GCC 7.
+    + Don't call dh_install for the -dbg packages, they have all been
+      replaced with their -dbgsym equivalents.
+    + Include /usr/share/dpkg/architecture.mk instead of defining all
+      DEB_* variables.
+  * debian/control:
+    + Remove all 'Priority' fields from the binary packages. The 'extra'
+      priority is deprecated and all packages are 'optional' now.
+    + Update Vcs fields to point at https://salsa.debian.org/
+    + Use https version of the upstream home page.
+  * Bump debhelper compat to 10:
+    + debian/compat:
+      - Update version number:
+    + debian/control:
+      - Bump build dependency on debhelper.
+      - Remove build dependencies on dh-autoreconf and autotools-dev.
+    + debian/rules:
+      - Remove DEBHELPER_VERSION check.
+  * Override typelib-package-name-does-not-match and
+    gir-missing-typelib-dependency lintian warnings in
+    gir1.2-javascriptcoregtk-3.0, libjavascriptcoregtk-1.0-dev,
+    libjavascriptcoregtk-3.0-dev and libwebkitgtk-dev.
+  * debian/copyright:
+    + Update copyright years and upstream URL.
 
- -- Raspbian forward porter <root@raspbian.org>  Wed, 14 Sep 2016 16:40:06 +0000
+ -- Alberto Garcia <berto@igalia.com>  Thu, 31 May 2018 19:38:40 +0200
 
 webkitgtk (2.4.11-3) unstable; urgency=medium
 

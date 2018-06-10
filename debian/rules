@@ -5,18 +5,11 @@
 
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 include /usr/share/dpkg/buildflags.mk
-
-DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
-DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
-DEB_BUILD_ARCH      ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
-DEB_HOST_ARCH_BITS  ?= $(shell dpkg-architecture -qDEB_HOST_ARCH_BITS)
-DEB_HOST_MULTIARCH  ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
-
-DEBHELPER_VERSION = $(shell dpkg-query -W -f='$${source:Version}' debhelper)
+include /usr/share/dpkg/architecture.mk
 
 GTK_VERSIONS = 2.0 3.0
 
-CFLAGS += -Wall -fno-delete-null-pointer-checks
+CFLAGS += -Wall -fno-delete-null-pointer-checks -Wno-expansion-to-defined
 LDFLAGS += -Wl,--as-needed
 
 COMMON_CONFIGURE_ARGUMENTS = \
@@ -160,6 +153,7 @@ binary-indep: build
 	dh_installdocs -i
 	dh_installchangelogs -i
 	dh_install -plibwebkitgtk-doc
+	dh_lintian -i
 	dh_link -i
 	dh_compress -i
 	dh_fixperms -i
@@ -191,17 +185,14 @@ ifeq (3.0,$(filter 3.0,$(GTK_VERSIONS)))
 	dh_installman -plibjavascriptcoregtk-3.0-bin
 endif
 	dh_link -a
+	dh_lintian -a
 ifeq (2.0,$(filter 2.0,$(GTK_VERSIONS)))
-	if dpkg --compare-versions $(DEBHELPER_VERSION) ge 9.20151219; then \
-		dh_strip -plibjavascriptcoregtk-1.0-0 --ddeb-migration='libjavascriptcoregtk-1.0-0-dbg (<< 2.4.10)' ; \
-		dh_strip -plibwebkitgtk-1.0-0 --ddeb-migration='libwebkitgtk-1.0-0-dbg (<< 2.4.10)' ; \
-	fi
+	dh_strip -plibjavascriptcoregtk-1.0-0 --ddeb-migration='libjavascriptcoregtk-1.0-0-dbg (<< 2.4.10)'
+	dh_strip -plibwebkitgtk-1.0-0 --ddeb-migration='libwebkitgtk-1.0-0-dbg (<< 2.4.10)'
 endif
 ifeq (3.0,$(filter 3.0,$(GTK_VERSIONS)))
-	if dpkg --compare-versions $(DEBHELPER_VERSION) ge 9.20151219; then \
-		dh_strip -plibjavascriptcoregtk-3.0-0 --ddeb-migration='libjavascriptcoregtk-3.0-0-dbg (<< 2.4.10)'; \
-		dh_strip -plibwebkitgtk-3.0-0 --ddeb-migration='libwebkitgtk-3.0-0-dbg (<< 2.4.10)' ; \
-	fi
+	dh_strip -plibjavascriptcoregtk-3.0-0 --ddeb-migration='libjavascriptcoregtk-3.0-0-dbg (<< 2.4.10)'
+	dh_strip -plibwebkitgtk-3.0-0 --ddeb-migration='libwebkitgtk-3.0-0-dbg (<< 2.4.10)'
 endif
 	dh_strip -a
 	dh_compress -a
